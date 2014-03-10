@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrapbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:fontawesometext="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/shucks"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="20dp"
+        android:text="Aw shucks! we couldn&apos;t find any definitions, please double check your spelling or consider trying these alternative sources."
+        android:textColor="#212221"
+        android:textSize="24sp" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/wikipedia_it"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/shucks"
+        android:layout_below="@+id/shucks"
+        android:layout_marginTop="16dp"
+        android:text="Search Wikipedia"
+        fontawesometext:bb_icon_left="fa-search"
+        fontawesometext:bb_type="primary" >
+    </com.beardedhen.androidbootstrap.BootstrapButton>
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/google_it"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/wikipedia_it"
+        android:layout_below="@+id/wikipedia_it"
+        android:layout_marginTop="16dp"
+        android:text="Search Google"
+        fontawesometext:bb_icon_left="fa-search"
+        fontawesometext:bb_type="primary" >
+
+    </com.beardedhen.androidbootstrap.BootstrapButton>
+
+</RelativeLayout>

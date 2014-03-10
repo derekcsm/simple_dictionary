@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/listadTable"
+    android:background="#F0ECD9"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin" >
+
+    <uk.co.androidalliance.edgeeffectoverride.EdgeEffectListView
+            android:id="@+id/definition_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"
+            android:background="@color/transparent"
+            app:edgeeffect_color="@color/green"
+            android:scrollbars="none"
+            android:drawSelectorOnTop="true"/>
+
+</LinearLayout>
+
+<TableRow
+        android:id="@+id/listadTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="center" >
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/listadView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-2403144300532691/7453679160" >
+        </com.google.android.gms.ads.AdView>
+    </TableRow>
+
+</RelativeLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="LinearListView">
+        <attr name="android:entries"/>
+        <attr name="dividerThickness" format="dimension" />
+    </declare-styleable>
+    
+     <declare-styleable name="EdgeEffectView">
+        <attr name="edgeeffect_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="AutofitTextView">
+        <attr name="minTextSize" format="dimension" />
+        <attr name="precision" format="float" />
+    </declare-styleable>
+
+</resources>

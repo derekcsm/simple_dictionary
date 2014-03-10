@@ -1,0 +1,26 @@
+<resources>
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+    </style>
+
+    <style name="ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">#4C8FC7</item>
+        <item name="android:alpha">0.95</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="OptionsText" parent="@style/AppTheme">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <style name="ButtonClear" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">@drawable/button_clear_selector</item>
+    </style>
+</resources>

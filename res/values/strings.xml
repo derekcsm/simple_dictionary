@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dictionary</string>
+
+    <string name="action_reset">reset</string>
+
+    <string name="define_card_title">Define</string>
+    <string name="define_card_input_hint">...</string>
+    <string name="define_card_button_text">DEFINE</string>
+</resources>
