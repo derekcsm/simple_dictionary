@@ -6,5 +6,7 @@
     <color name="menu_section_header">#FFDDDDDD</color>
     <color name="green">#43484A</color>
     <color name="transparent">#00ffffff</color>
+    <color name="bg">#F0ECD9</color>
+    <color name="actionbar_colour">#43484A</color>
     
 </resources>
