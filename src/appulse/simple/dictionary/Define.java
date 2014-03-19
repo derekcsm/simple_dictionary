@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -43,6 +44,9 @@ public class Define extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//make a spinner in the actionbar and create the activity
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.define_layout);
 		
 		getSupportActionBar().setIcon(R.drawable.ic_search);
@@ -155,6 +159,10 @@ public class Define extends SherlockActivity {
 	  }
 
 	public void getWordOfDay() {
+
+		findViewById(R.id.word_of_day_container).setVisibility(View.INVISIBLE);
+		setSupportProgressBarIndeterminateVisibility(true);
+		
 		new AsyncTask<Void, Void, Definition>() {
 			String base_url = "http://api.wordnik.com/v4/words.json/wordOfTheDay";
 
@@ -183,19 +191,41 @@ public class Define extends SherlockActivity {
 
 			@Override
 			protected void onPostExecute(final Definition result) {
-				((TextView) findViewById(R.id.word)).setText(result.word);
-				((TextView) findViewById(R.id.type)).setText(result.type);
-				((TextView) findViewById(R.id.definition))
-						.setText(result.definition);
-				findViewById(R.id.word_of_day_container).setVisibility(
-						View.VISIBLE);
+				
+				
+				if (result != null){
+					setSupportProgressBarIndeterminateVisibility(false);
+					((TextView) findViewById(R.id.word)).setText(result.word);
+					((TextView) findViewById(R.id.type)).setText(result.type);
+					((TextView) findViewById(R.id.definition))
+							.setText(result.definition);
+					findViewById(R.id.word_of_day_container).setVisibility(
+							View.VISIBLE);
 
-				findViewById(R.id.word_of_day_container).setOnClickListener(
-						new View.OnClickListener() {
-							public void onClick(View view) {
-								getDefinition(result.word);
-							}
-						});
+					findViewById(R.id.word_of_day_container).setOnClickListener(
+							new View.OnClickListener() {
+								public void onClick(View view) {
+									getDefinition(result.word);
+								}
+							});
+				}
+				
+				if (result == null){
+					setSupportProgressBarIndeterminateVisibility(false);
+					word.setText("No network connection");
+					type.setText("Touch to refresh.");
+					//definition.setText("TOUCH TO REFRESH");
+					findViewById(R.id.word_of_day_container).setVisibility(
+							View.VISIBLE);
+					
+					findViewById(R.id.word_of_day_container).setOnClickListener(
+							new View.OnClickListener() {
+								public void onClick(View view) {
+									getWordOfDay();
+								}
+							});
+				}
+				
 			}
 		}.execute();
 	}

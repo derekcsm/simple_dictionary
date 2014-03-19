@@ -50,8 +50,11 @@ public class DefinitionList extends SherlockActivity implements TextToSpeech.OnI
 	TextView bottomtitle;
 	String definethis;
 	String the_word;
+	String failsafe;
 	Typeface tf_b;
 	Typeface tf_r;
+	//Menu menu;
+	MenuItem item;
 	private TextToSpeech tts;
     AdView adView;
 
@@ -65,6 +68,7 @@ public class DefinitionList extends SherlockActivity implements TextToSpeech.OnI
 		
 		//getting the searched word to a string
 		the_word = getIntent().getStringExtra("WORD");
+		
 		
         //Async tasks go here
 		getPronounciation(the_word);
@@ -166,6 +170,9 @@ public class DefinitionList extends SherlockActivity implements TextToSpeech.OnI
         case R.id.speak_it:
         	speakOut();
             return true;
+        case R.id.refresh_it:
+        	refresh();
+            return true;
         default:
             return super.onOptionsItemSelected(item);
     }
@@ -175,6 +182,14 @@ public class DefinitionList extends SherlockActivity implements TextToSpeech.OnI
 	public boolean onCreateOptionsMenu(Menu menu) {
 		com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.main, menu);
+		item = menu.findItem(R.id.refresh_it);
+		
+		if (failsafe == "on"){
+			item.setVisible(true);
+		}
+		else {
+			item.setVisible(false);
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -190,7 +205,26 @@ public class DefinitionList extends SherlockActivity implements TextToSpeech.OnI
 		new Synonym_Fetcher(this).execute(word);
 	}
 
-	
+	public void refresh() {
+		
+		Intent intent = new Intent(DefinitionList.this, DefinitionList.class);
+		intent.putExtra("WORD", the_word);
+		DefinitionList.this.startActivity(intent);
+		
+		this.finish();
+		//Async tasks go here
+//		setSupportProgressBarIndeterminateVisibility(true);
+//
+//        mListView.invalidateViews();
+//        mListView.refreshDrawableState();
+//        
+//				getPronounciation(the_word);
+//				getDefinition(the_word);
+//				getSynonyms(the_word);
+//				AdRequest adRequest = new AdRequest.Builder().build();
+//				adView.loadAd(adRequest);
+//				mListView.setAdapter(mAdapter);
+	}
 	
 	public void addSynonyms() {
 		View bottom = getLayoutInflater().inflate(R.layout.bottom, null);
@@ -208,6 +242,8 @@ public class DefinitionList extends SherlockActivity implements TextToSpeech.OnI
 	public void createFailsafe() {
 		View failcatcher = getLayoutInflater().inflate(R.layout.fail_catcher, null);
 		this.bottomListView = (ListView) failcatcher.findViewById(R.id.list);
+		
+		failsafe="on";
 		
 		TextView shucks = (TextView) 
 				failcatcher.findViewById(R.id.shucks);

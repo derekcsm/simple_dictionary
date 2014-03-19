@@ -15,7 +15,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
-        android:text="Aw shucks! we couldn&apos;t find any definitions, please double check your spelling or consider trying these alternative sources."
+        android:text="@string/shucks"
         android:textColor="#212221"
         android:textSize="24sp" />
 
@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/wikipedia_it"
         android:layout_below="@+id/wikipedia_it"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         android:text="Search Google"
         fontawesometext:bb_icon_left="fa-search"

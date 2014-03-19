@@ -4,5 +4,10 @@
        android:showAsAction="ifRoom"
        android:icon="@drawable/ic_action_volume_on"      
        android:title= "Speak it!" /> 
+       
+    <item android:id="@+id/refresh_it"
+       android:showAsAction="ifRoom"
+       android:icon="@drawable/ic_action_refresh"      
+       android:title="Refresh" /> 
 
 </menu>

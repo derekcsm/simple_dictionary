@@ -7,4 +7,5 @@
     <string name="define_card_title">Define</string>
     <string name="define_card_input_hint">...</string>
     <string name="define_card_button_text">DEFINE</string>
+    <string name="shucks">Aw shucks! we couldn\'t find any definitions, please check if you\'re connected to the internet, and that your spelling is correct. \n \nConsider trying these alternative sources.</string>
 </resources>
