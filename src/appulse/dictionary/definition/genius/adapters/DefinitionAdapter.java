@@ -61,14 +61,14 @@ public class DefinitionAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int i, View view, ViewGroup viewGroup) {
-		
-		Typeface tf_reg = Typeface.createFromAsset(mContext.getAssets(), "fonts/Georgia.ttf");
-		Typeface tf_it = Typeface.createFromAsset(mContext.getAssets(), "fonts/Georgia Italic.ttf");
+
 		
 		View mView = LayoutInflater.from(mContext).inflate(R.layout.definition_card, null);
 		TextView type = ((TextView) mView.findViewById(R.id.type));
-		type.setTypeface(tf_it);
 		TextView definition = ((TextView) mView.findViewById(R.id.definition));
+		Typeface tf_reg = Typeface.createFromAsset(mContext.getAssets(), "fonts/Georgia.ttf");
+		Typeface tf_it = Typeface.createFromAsset(mContext.getAssets(), "fonts/Georgia Italic.ttf");
+		type.setTypeface(tf_it);
 		definition.setTypeface(tf_reg);
 		((TextView) mView.findViewById(R.id.type)).setText(getItem(i).type);
 		((TextView) mView.findViewById(R.id.definition)).setText(getItem(i).definition);
@@ -97,5 +97,6 @@ public class DefinitionAdapter extends BaseAdapter {
 
 		return mView;
 	}
+	
 
 }

@@ -8,12 +8,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import appulse.simple.dictionary.R;
 import appulse.dictionary.definition.genius.objects.Definition;
+
+import me.grantland.widget.AutofitTextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,8 +25,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,23 +33,22 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class Define extends SherlockActivity {
-	
+
 	EditText define;
 	BootstrapButton search_btn;
 	TextView wod;
 	TextView type;
-	TextView word;
+	AutofitTextView word;
 	TextView definition;
-	AdView adView;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//make a spinner in the actionbar and create the activity
+
+		// make a spinner in the actionbar and create the activity
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.define_layout);
-		
+
 		getSupportActionBar().setIcon(R.drawable.ic_search);
 		getSupportActionBar().setBackgroundDrawable(
 				new ColorDrawable(Color.parseColor("#43484A")));
@@ -61,34 +61,35 @@ public class Define extends SherlockActivity {
 				"fonts/Montserrat-Regular.ttf");
 		Typeface tf_r = Typeface.createFromAsset(getAssets(),
 				"fonts/Georgia.ttf");
-		
-		// Look up the AdView as a resource and load a request.
-	    adView = (AdView)this.findViewById(R.id.adView);
-	    AdRequest adRequest = new AdRequest.Builder().build();
-	    adView.loadAd(adRequest);
 
-		define = (EditText)findViewById(R.id.define_card_input);
+		define = (EditText) findViewById(R.id.define_card_input);
 		define.setTypeface(tf_b);
 		
-		search_btn = (BootstrapButton)findViewById(R.id.search_button);
+		define.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				getDefinition();
+				return false;
+			}
+		});
+
+
+		search_btn = (BootstrapButton) findViewById(R.id.search_button);
 		search_btn.setLeftIcon("fa-search");
-		//search_btn.setTypeface(tf_r);
-		
-		wod = (TextView)findViewById(R.id.wod);
+
+		wod = (TextView) findViewById(R.id.wod);
 		wod.setTypeface(mon_reg);
-		
-		word = (TextView)findViewById(R.id.word);
+
+		word = (AutofitTextView) findViewById(R.id.word);
 		word.setTypeface(tf_b);
-		
-		word = (TextView)findViewById(R.id.word);
-		word.setTypeface(tf_b);
-		
-		type = (TextView)findViewById(R.id.type);
+
+		type = (TextView) findViewById(R.id.type);
 		type.setTypeface(tf_it);
-		
-		definition = (TextView)findViewById(R.id.definition);
+
+		definition = (TextView) findViewById(R.id.definition);
 		definition.setTypeface(tf_r);
-		
+
 		int titleId = Resources.getSystem().getIdentifier("action_bar_title",
 				"id", "android");
 		if (titleId == 0
@@ -99,7 +100,6 @@ public class Define extends SherlockActivity {
 		final TextView appName = (TextView) findViewById(titleId);
 		appName.setTypeface(mon_reg);
 
-		
 		Intent intent = getIntent();
 		if (intent.getAction().equals(Intent.ACTION_SEND)
 				&& intent.getType() != null)
@@ -121,48 +121,31 @@ public class Define extends SherlockActivity {
 			getDefinition(intent.getStringExtra(Intent.EXTRA_TEXT));
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
-	  public void onResume() {
-	    super.onResume();
-	    if (adView != null) {
-	      adView.resume();
-	    }
-	  }
+	public void onResume() {
+		super.onResume();
+	}
 
-	  @Override
-	  public void onPause() {
-	    if (adView != null) {
-	      adView.pause();
-	    }
-	    super.onPause();
-	  }
-	
-	/** Called before the activity is destroyed. */
-	  @Override
-	  public void onDestroy() {
-	    // Destroy the AdView.
-	    if (adView != null) {
-	      adView.destroy();
-	    }
-	    super.onDestroy();
-	  }
+	@Override
+	public void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
 
 	public void getWordOfDay() {
 
 		findViewById(R.id.word_of_day_container).setVisibility(View.INVISIBLE);
 		setSupportProgressBarIndeterminateVisibility(true);
-		
+
 		new AsyncTask<Void, Void, Definition>() {
 			String base_url = "http://api.wordnik.com/v4/words.json/wordOfTheDay";
 
@@ -191,9 +174,8 @@ public class Define extends SherlockActivity {
 
 			@Override
 			protected void onPostExecute(final Definition result) {
-				
-				
-				if (result != null){
+
+				if (result != null) {
 					setSupportProgressBarIndeterminateVisibility(false);
 					((TextView) findViewById(R.id.word)).setText(result.word);
 					((TextView) findViewById(R.id.type)).setText(result.type);
@@ -202,30 +184,30 @@ public class Define extends SherlockActivity {
 					findViewById(R.id.word_of_day_container).setVisibility(
 							View.VISIBLE);
 
-					findViewById(R.id.word_of_day_container).setOnClickListener(
-							new View.OnClickListener() {
+					findViewById(R.id.word_of_day_container)
+							.setOnClickListener(new View.OnClickListener() {
 								public void onClick(View view) {
 									getDefinition(result.word);
 								}
 							});
 				}
-				
-				if (result == null){
+
+				if (result == null) {
 					setSupportProgressBarIndeterminateVisibility(false);
 					word.setText("No network connection");
 					type.setText("Touch to refresh.");
-					//definition.setText("TOUCH TO REFRESH");
+					// definition.setText("TOUCH TO REFRESH");
 					findViewById(R.id.word_of_day_container).setVisibility(
 							View.VISIBLE);
-					
-					findViewById(R.id.word_of_day_container).setOnClickListener(
-							new View.OnClickListener() {
+
+					findViewById(R.id.word_of_day_container)
+							.setOnClickListener(new View.OnClickListener() {
 								public void onClick(View view) {
 									getWordOfDay();
 								}
 							});
 				}
-				
+
 			}
 		}.execute();
 	}
@@ -240,4 +222,5 @@ public class Define extends SherlockActivity {
 		intent.putExtra("WORD", word);
 		startActivity(intent);
 	}
+
 }
